@@ -9,15 +9,19 @@ import lombok.Setter;
 
 @Setter
 @Getter
+
 @AllArgsConstructor
 public class Customer {
     private final  Long id;
-    @NotBlank
+
+    @NotBlank(message = "name can,t be blank")
     private final String name;
-    @NotBlank
+
+    @NotBlank(message = "password can,t be blank")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private final  String password;
-@NotBlank
+
+@NotBlank(message = "email can,t be blank")
 @Email//this  is the Email valiodation
     private final String email;
 public long getCustomerId(){
