@@ -1,26 +1,34 @@
 package com.example.demo.customer;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-@RequestMapping("Api/Customer/")
+@RequestMapping("api/v1/customer")
 @RestController
-public class CustomerController {
+public class CustomerControllerV1 {
     private final  CustomerService customerService;
     @Autowired
 
-    public CustomerController(CustomerService customerService){
+    public CustomerControllerV1(CustomerService customerService){
 
         this.customerService =customerService;
     }
 @GetMapping
-List<Customer> getCustomer(){
-        return  customerService.getCustomer();
+List<Customer> getCustomers(){
+        return customerService.getCustomers();
 }
+
+    @GetMapping(path = "{customerId}")
+    Customer getCustomers(@PathVariable("customerId") long id){
+        return customerService.getCustomer(id);
+    }
 @PostMapping
-    void createNewCustomer(@RequestBody Customer customer){
+    void createNewCustomer(@Valid @RequestBody   Customer customer){
     System.out.println("Request Body ====");
     System.out.println(customer);
 }
