@@ -4,28 +4,21 @@ package com.example.demo.customer;
 import com.example.demo.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.List;
-
 @Service
-
 public class CustomerService {
-    private final CustomerRepo customerRepo;
+    private final CustomerRepository customerRepository;
 @Autowired
-    public CustomerService(CustomerRepo customerRepo) {
-        this.customerRepo = customerRepo;
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
-
     List<Customer> getCustomers(){
-    return  customerRepo.getCustomers();
+    return  customerRepository.findAll();
 }
 
 
     Customer getCustomer(long id){
-        return getCustomers().stream().
-                filter(customer -> customer.getId().equals(id)).
-                findFirst().
+        return customerRepository.findById(id).
                 orElseThrow(()->new NotFoundException("cudtomer with id "+ id +" not found "));
     }
 }
